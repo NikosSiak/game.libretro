@@ -530,4 +530,50 @@ GAME_ERROR CGameLibRetro::RCResetRuntime()
   return GAME_ERROR_NO_ERROR;
 }
 
+GAME_ERROR CGameLibRetro::ActivateAchievement(unsigned cheevo_id, const char* memaddr)
+{
+  CCheevos::Get().ActivateAchievement(cheevo_id, memaddr);
+  return GAME_ERROR_NO_ERROR;
+}
+
+GAME_ERROR CGameLibRetro::AwardAchievement(char* url,
+                                           size_t size,
+                                           const char* username,
+                                           const char* token,
+                                           unsigned cheevo_id,
+                                           int hardcore,
+                                           const char* game_hash)
+{
+    if (!CCheevos::Get().AwardAchievement(url, size, username, token, cheevo_id, hardcore, game_hash))
+    {
+        return GAME_ERROR_FAILED;
+    }
+    return GAME_ERROR_NO_ERROR;
+}
+
+/* GAME_ERROR CGameLibRetro::RuntimeEventHandler(char* url,
+                                              size_t size,
+                                              const char* username,
+                                              const char* token,
+                                              unsigned id,
+                                              unsigned cheevo_id,
+                                              int hardcore,
+                                              const char* game_hash)
+{
+  return GAME_ERROR_NO_ERROR;
+}
+*/
+GAME_ERROR CGameLibRetro::DeactivateTriggeredAchievement(unsigned cheevo_id)
+{
+  CCheevos::Get().DeactivateTriggeredAchievement(cheevo_id);
+  return GAME_ERROR_NO_ERROR;
+}
+
+
+GAME_ERROR CGameLibRetro::TestAchievementPerFrame()
+{
+  CCheevos::Get().TestAchievementPerFrame();
+  return GAME_ERROR_NO_ERROR;
+}
+
 ADDONCREATOR(CGameLibRetro)
