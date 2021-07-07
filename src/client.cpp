@@ -6,6 +6,8 @@
  */
 
 #include "cheevos/Cheevos.h"
+#include "rcheevos.h"
+#include "cheevos/Cheevos.cpp"
 #include "cheevos/CheevosEnvironment.h"
 #include "input/ButtonMapper.h"
 #include "input/ControllerTopology.h"
@@ -279,6 +281,8 @@ GAME_ERROR CGameLibRetro::RunFrame()
 
   m_client.retro_run();
 
+  LIBRETRO::CCheevos::Get().TestAchievementPerFrame();
+  
   CLibretroEnvironment::Get().OnFrameEnd();
 
   return GAME_ERROR_NO_ERROR;
@@ -529,6 +533,7 @@ GAME_ERROR CGameLibRetro::RCResetRuntime()
 
   return GAME_ERROR_NO_ERROR;
 }
+
 
 GAME_ERROR CGameLibRetro::ActivateAchievement(unsigned cheevo_id, const char* memaddr)
 {
