@@ -277,10 +277,10 @@ GAME_ERROR CGameLibRetro::RunFrame()
   m_frameTimeLast = current;
   m_clientBridge.FrameTime(delta);
 
-  //TestAchievementPerFrame();
-
   m_client.retro_run();
-  
+
+  TestAchievementPerFrame();
+
   CLibretroEnvironment::Get().OnFrameEnd();
 
   return GAME_ERROR_NO_ERROR;

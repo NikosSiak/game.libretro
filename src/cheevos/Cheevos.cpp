@@ -21,7 +21,7 @@ CCheevos::CCheevos()
 {
   rc_runtime_init(&m_runtime);
 }
-//kdfgkweg
+
 void CCheevos::Initialize()
 {
   rc_runtime_init(&m_runtime);
@@ -96,7 +96,6 @@ void CCheevos::ActivateAchievement(unsigned cheevo_id, const char* memaddr) //1
   rc_runtime_activate_achievement(
       &m_runtime, cheevo_id, memaddr, NULL,
       0);
-  //kodi::Log(memaddr.asString());
   kodi::Log(ADDON_LOG_ERROR, "AAAAAAAAA");
   
   // it will return integer value 0 in case achivement is activated successfully.
@@ -121,7 +120,7 @@ void CCheevos::DeactivateTriggeredAchievement(unsigned cheevo_id)
 }
 
 
-void CCheevos::TestAchievementPerFrame() //2
+void CCheevos::TestAchievementPerFrame() 
 {
   rc_runtime_do_frame(&m_runtime, RuntimeEventHandler, PeekInternal, this, NULL);
 }
