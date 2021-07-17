@@ -43,7 +43,7 @@ public:
   void EnableRichPresence(const char* script);
   void EvaluateRichPresence(char* evaluation, size_t size);
   unsigned int Peek(unsigned int address, unsigned int numBytes);
-  void ActivateAchievement(unsigned cheevo_id, const char* memaddr);
+  void ActivateAchievement(unsigned cheevo_id, const char* memaddr); 
   bool AwardAchievement(char* url,
                         size_t size,
                         const char* username,
@@ -53,7 +53,6 @@ public:
                         const char* game_hash);
   void DeactivateTriggeredAchievement(unsigned cheevo_id);
   void TestAchievementPerFrame();
-  
 
 private:
   const uint8_t* FixupFind(unsigned address, CMemoryMap& mmap, int consolecheevos);
@@ -63,10 +62,8 @@ private:
 
   static unsigned int PeekInternal(unsigned address, unsigned num_bytes, void* ud);
   static void RuntimeEventHandler(const rc_runtime_event_t* runtime_event);
-  
+
   rc_runtime_t m_runtime;
-  //unsigned c_id;
- // rc_runtime_event_t runtime_event;
   std::unordered_map<unsigned, const uint8_t*> m_addressFixups;
 
   // Rich Presence

@@ -6,8 +6,6 @@
  */
 
 #include "cheevos/Cheevos.h"
-#include "rcheevos.h"
-#include "cheevos/Cheevos.cpp"
 #include "cheevos/CheevosEnvironment.h"
 #include "input/ButtonMapper.h"
 #include "input/ControllerTopology.h"
@@ -279,9 +277,9 @@ GAME_ERROR CGameLibRetro::RunFrame()
   m_frameTimeLast = current;
   m_clientBridge.FrameTime(delta);
 
-  m_client.retro_run();
+  //TestAchievementPerFrame();
 
-  LIBRETRO::CCheevos::Get().TestAchievementPerFrame();
+  m_client.retro_run();
   
   CLibretroEnvironment::Get().OnFrameEnd();
 
@@ -527,14 +525,6 @@ GAME_ERROR CGameLibRetro::GetRichPresenceEvaluation(char* evaluation, size_t siz
   return GAME_ERROR_NO_ERROR;
 }
 
-GAME_ERROR CGameLibRetro::RCResetRuntime()
-{
-  CCheevos::Get().ResetRuntime();
-
-  return GAME_ERROR_NO_ERROR;
-}
-
-
 GAME_ERROR CGameLibRetro::ActivateAchievement(unsigned cheevo_id, const char* memaddr)
 {
   CCheevos::Get().ActivateAchievement(cheevo_id, memaddr);
@@ -549,11 +539,11 @@ GAME_ERROR CGameLibRetro::AwardAchievement(char* url,
                                            int hardcore,
                                            const char* game_hash)
 {
-    if (!CCheevos::Get().AwardAchievement(url, size, username, token, cheevo_id, hardcore, game_hash))
-    {
-        return GAME_ERROR_FAILED;
-    }
-    return GAME_ERROR_NO_ERROR;
+  if (!CCheevos::Get().AwardAchievement(url, size, username, token, cheevo_id, hardcore, game_hash))
+  {
+    return GAME_ERROR_FAILED;
+  }
+  return GAME_ERROR_NO_ERROR;
 }
 
 /* GAME_ERROR CGameLibRetro::RuntimeEventHandler(char* url,
@@ -578,6 +568,13 @@ GAME_ERROR CGameLibRetro::DeactivateTriggeredAchievement(unsigned cheevo_id)
 GAME_ERROR CGameLibRetro::TestAchievementPerFrame()
 {
   CCheevos::Get().TestAchievementPerFrame();
+  return GAME_ERROR_NO_ERROR;
+}
+
+GAME_ERROR CGameLibRetro::RCResetRuntime()
+{
+  CCheevos::Get().ResetRuntime();
+
   return GAME_ERROR_NO_ERROR;
 }
 

@@ -21,7 +21,7 @@ CCheevos::CCheevos()
 {
   rc_runtime_init(&m_runtime);
 }
-
+//kdfgkweg
 void CCheevos::Initialize()
 {
   rc_runtime_init(&m_runtime);
@@ -91,9 +91,15 @@ void CCheevos::EvaluateRichPresence(char* evaluation, size_t size)
   rc_evaluate_richpresence(m_richPresence, evaluation, size, PeekInternal, this, NULL);
 }
 
-void CCheevos::ActivateAchievement(unsigned cheevo_id,const char* memaddr)  //1
+void CCheevos::ActivateAchievement(unsigned cheevo_id, const char* memaddr) //1
 {
-  rc_runtime_activate_achievement(&m_runtime, cheevo_id, memaddr, NULL,0); // it will return integer value 0 in case achivement is activated successfully.
+  rc_runtime_activate_achievement(
+      &m_runtime, cheevo_id, memaddr, NULL,
+      0);
+  //kodi::Log(memaddr.asString());
+  kodi::Log(ADDON_LOG_ERROR, "AAAAAAAAA");
+  
+  // it will return integer value 0 in case achivement is activated successfully.
 }
 
 bool CCheevos::AwardAchievement(char* url,
@@ -104,24 +110,19 @@ bool CCheevos::AwardAchievement(char* url,
                                 int hardcore,
                                 const char* game_hash)
 {
-  //c_id = cheevo_id;
-  //rc_runtime_deactivate_achievement(&m_runtime, c_id);
+  
   return rc_url_award_cheevo(url, size, username, token, cheevo_id, hardcore, game_hash) >= 0;
 }
 
 
-
 void CCheevos::DeactivateTriggeredAchievement(unsigned cheevo_id)
 {
-  //c_id = cheevo_id;
   rc_runtime_deactivate_achievement(&m_runtime, cheevo_id);
-  //return rc_url_award_cheevo(url, size, username, token, cheevo_id, hardcore, game_hash) >= 0;
 }
 
 
-void CCheevos::TestAchievementPerFrame() //2    
+void CCheevos::TestAchievementPerFrame() //2
 {
-  //rc_runtime_get_achievement(&m_runtime, id);
   rc_runtime_do_frame(&m_runtime, RuntimeEventHandler, PeekInternal, this, NULL);
 }
 
@@ -133,7 +134,6 @@ void CCheevos::RuntimeEventHandler(const rc_runtime_event_t* runtime_event)
     CCheevos::Get().DeactivateTriggeredAchievement(runtime_event->id);
   }
 }
-
 
 unsigned int CCheevos::PeekInternal(unsigned address, unsigned num_bytes, void* ud)
 {
@@ -288,5 +288,3 @@ size_t CCheevos::Reduse(size_t addr, size_t mask)
 
   return addr;
 }
-
-
