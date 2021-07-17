@@ -88,6 +88,24 @@ public:
                                    const char* richPresence) override;
   GAME_ERROR EnableRichPresence(const char* script) override;
   GAME_ERROR GetRichPresenceEvaluation(char* evaluation, size_t size) override;
+  GAME_ERROR ActivateAchievement(unsigned cheevo_id, const char* memaddr) override; 
+  GAME_ERROR AwardAchievement(char* url,
+                              size_t size,
+                              const char* username,
+                              const char* token,
+                              unsigned cheevo_id,
+                              int hardcore,
+                              const char* game_hash) override;
+  /*GAME_ERROR RuntimeEventHandler(char* url,
+                           size_t size,
+                           const char* username,
+                           const char* token,
+                           unsigned id,
+                           unsigned cheevo_id,
+                           int hardcore,
+                           const char* game_hash) override;*/
+  GAME_ERROR DeactivateTriggeredAchievement(unsigned cheevo_id) override;
+  GAME_ERROR TestAchievementPerFrame() override;
   GAME_ERROR RCResetRuntime() override;
 
 private:

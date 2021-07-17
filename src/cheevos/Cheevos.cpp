@@ -91,6 +91,49 @@ void CCheevos::EvaluateRichPresence(char* evaluation, size_t size)
   rc_evaluate_richpresence(m_richPresence, evaluation, size, PeekInternal, this, NULL);
 }
 
+void CCheevos::ActivateAchievement(unsigned cheevo_id, const char* memaddr) //1
+{
+  rc_runtime_activate_achievement(
+      &m_runtime, cheevo_id, memaddr, NULL,
+      0);
+  kodi::Log(ADDON_LOG_ERROR, "AAAAAAAAA");
+  
+  // it will return integer value 0 in case achivement is activated successfully.
+}
+
+bool CCheevos::AwardAchievement(char* url,
+                                size_t size,
+                                const char* username,
+                                const char* token,
+                                unsigned cheevo_id,
+                                int hardcore,
+                                const char* game_hash)
+{
+  
+  return rc_url_award_cheevo(url, size, username, token, cheevo_id, hardcore, game_hash) >= 0;
+}
+
+
+void CCheevos::DeactivateTriggeredAchievement(unsigned cheevo_id)
+{
+  rc_runtime_deactivate_achievement(&m_runtime, cheevo_id);
+}
+
+
+void CCheevos::TestAchievementPerFrame() 
+{
+  rc_runtime_do_frame(&m_runtime, RuntimeEventHandler, PeekInternal, this, NULL);
+}
+
+
+void CCheevos::RuntimeEventHandler(const rc_runtime_event_t* runtime_event)
+{
+  if (runtime_event->type == RC_RUNTIME_EVENT_ACHIEVEMENT_TRIGGERED)
+  {
+    CCheevos::Get().DeactivateTriggeredAchievement(runtime_event->id);
+  }
+}
+
 unsigned int CCheevos::PeekInternal(unsigned address, unsigned num_bytes, void* ud)
 {
   CCheevos* cheevos = static_cast<CCheevos*>(ud);
